@@ -1,6 +1,6 @@
 cask "deepclean" do
-  version "0.2.2"
-  sha256 "5080b868246d7fa1bcbe7edcbe70eb676a4219b568d00eee58681636de7da043"
+  version "0.2.3"
+  sha256 "8791e0e975c7c620c893681fb7fbafd2340b4309a807b79ac249d5affa968b9c"
 
   url "https://github.com/bunthondev/deep-clean/releases/download/v#{version}/DeepClean-#{version}.zip"
   name "DeepClean"
