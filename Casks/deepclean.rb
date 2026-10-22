@@ -22,7 +22,10 @@ cask "deepclean" do
     "~/Library/Saved Application State/com.devkh.deepclean.savedState",
   ]
 
-  caveats do
-    unsigned
-  end
+  caveats <<~EOS
+    DeepClean is not notarized by Apple, so macOS blocks the first launch.
+    Either reinstall with `brew install --cask --no-quarantine bunthondev/tap/deepclean`
+    or run once:
+      xattr -d com.apple.quarantine "#{appdir}/DeepClean.app"
+  EOS
 end
