@@ -13,9 +13,17 @@ cask "deepclean" do
   end
 
   depends_on arch: :arm64
-  depends_on macos: ">= :sonoma"
+  depends_on macos: :sonoma
 
   app "DeepClean.app"
+
+  # The build is not notarized by Apple. Clearing the quarantine flag here lets the app open
+  # right after install instead of being blocked by Gatekeeper.
+  postflight do
+    system_command "/usr/bin/xattr",
+                   args: ["-dr", "com.apple.quarantine", "#{appdir}/DeepClean.app"],
+                   must_succeed: false
+  end
 
   zap trash: [
     "~/Library/Preferences/com.devkh.deepclean.plist",
@@ -23,9 +31,8 @@ cask "deepclean" do
   ]
 
   caveats <<~EOS
-    DeepClean is not notarized by Apple, so macOS blocks the first launch.
-    Either reinstall with `brew install --cask --no-quarantine bunthondev/tap/deepclean`
-    or run once:
-      xattr -d com.apple.quarantine "#{appdir}/DeepClean.app"
+    DeepClean is not notarized by Apple. This cask clears the quarantine flag after
+    install so the app opens normally. If macOS still blocks it, run once:
+      xattr -dr com.apple.quarantine "#{appdir}/DeepClean.app"
   EOS
 end
