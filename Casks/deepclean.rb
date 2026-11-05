@@ -19,10 +19,10 @@ cask "deepclean" do
 
   # The build is not notarized by Apple. Clearing the quarantine flag here lets the app open
   # right after install instead of being blocked by Gatekeeper.
-  postflight do
-    system_command "/usr/bin/xattr",
-                   args: ["-dr", "com.apple.quarantine", "#{appdir}/DeepClean.app"],
-                   must_succeed: false
+  postflight_steps do
+    run "/usr/bin/xattr",
+        args:         ["-dr", "com.apple.quarantine", "{{appdir}}/DeepClean.app"],
+        must_succeed: false
   end
 
   zap trash: [
